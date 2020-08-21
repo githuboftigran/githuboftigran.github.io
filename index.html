@@ -12,6 +12,19 @@
         <div class="controlsContainer">
             <div class="controlRowContainer">
                 <div class="valueContainer">
+                    <span>Rotation</span>
+                    <span id="rotationValue">0</span>
+                </div>
+                <div class="sliderContainer">
+                    <div class="minMaxContainer">
+                        <span>0</span>
+                        <span>360</span>
+                    </div>
+                    <input type="range" min="0" max="360" value="0" id="rotationInput"/>
+                </div>
+            </div>
+            <div class="controlRowContainer">
+                <div class="valueContainer">
                     <span>Corners</span>
                     <span id="cornersValue">6</span>
                 </div>
@@ -74,6 +87,15 @@
                     </div>
                     <input type="range" min="1" max="1000" value="100" id="countInput"/>
                 </div>
+            </div>
+            <div id="colorsContainer">
+                <input
+                    type="button"
+                    id="addColorButton"
+                    value="Add color"
+                    class="button"
+                />
+                <div id="colorsList"></div>
             </div>
             <input
                 type="button"

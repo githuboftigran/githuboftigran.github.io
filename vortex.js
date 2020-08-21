@@ -1,10 +1,4 @@
-//const COLORS = [0xff0000, 0xff7f00, 0xffff00, 0x00ff00, 0x00ff00, 0x99ccff, 0x99ccff, 0x0000ff, 0x0000ff, 0x0000ff, 0xcc00ff, 0xcc00ff, 0xcc00ff, 0xcc00ff, 0xcc00ff, 0xcc00ff, ];
-//const COLORS = [0x00afff, 0x0000ff, 0xff0000, 0xff0000];
-//const COLORS = [0xff0000, 0x0000ff, 0x00ffff];
-//const COLORS = [0x0000ff, 0xff0000];
-//const COLORS = [0x4444ff, 0xff4444];
-//const COLORS = [0x6600ff, 0x0000ff];
-const COLORS = [0x0066ff, 0x00ffff];
+const deleteIcon = 'https://www.pinclipart.com/picdir/big/88-882904_mermaiden-crystal-dress-up-game-white-x-icon.png';
 
 const interpolateColor = (colors, position) => {
     const scaledPosition = position * (colors.length - 1);
@@ -41,14 +35,14 @@ const drawPolygon = (size, center, corners, color, context) => {
     context.stroke();
 };
 
-const drawPattern = (center, size, corners, lineWidth, count, angle, fraction, context) => {
+const drawPattern = (center, size, corners, lineWidth, count, angle, fraction, colors, context) => {
     context.save();
     context.lineWidth = lineWidth;
     const {cx, cy} = center;
     for(let i = 0; i < count; i += 1) {
         const alpha = Math.floor(255 - 255 * i / count);
 
-        const color = interpolateColor(COLORS, i / count);
+        const color = interpolateColor(colors, i / count);
         const colorStr = color.toString(16);
         let colorWithAlpha = `${colorStr}${alpha < 16 ? '0' : ''}${alpha.toString(16)}`;
         if (colorWithAlpha.length < 8) {
@@ -65,6 +59,9 @@ const drawPattern = (center, size, corners, lineWidth, count, angle, fraction, c
 
 window.onload = function() {
     const canvas = document.getElementById('mainDrawingCanvas');
+
+    const rotationInput = document.getElementById('rotationInput');
+    const rotationValue = document.getElementById('rotationValue');
     const cornersInput = document.getElementById('cornersInput');
     const cornersValue = document.getElementById('cornersValue');
     const lineWidthInput = document.getElementById('lineWidthInput');
@@ -76,25 +73,44 @@ window.onload = function() {
     const countInput = document.getElementById('countInput');
     const countValue = document.getElementById('countValue');
 
+    const colorsList = document.getElementById('colorsList');
+
     const copyButton = document.getElementById('copyButton');
+    const addColorButton = document.getElementById('addColorButton');
 
     const context = canvas.getContext('2d');
     const { width, height } = canvas;
 
+    let rotation = 0;
     let corners = cornersInput.value;
     let lineWidth = lineWidthInput.value;
     let angle = angleInput.value;
     let fraction = fractionInput.value;
     let count = countInput.value;
+    const colors = [];
 
     const redraw = () => {
         context.fillStyle = 'black';
         context.lineJoin = 'round';
         context.fillRect(0, 0, width, height);
 
-        const center = { cx: width / 2, cy: height / 2 };
-        drawPattern(center, 350, corners, lineWidth, count, angle, fraction, context);
+        const cx = width / 2;
+        const cy = height / 2;
+        context.save();
+        context.translate(cx, cy);
+        context.rotate(rotation);
+        context.translate(-cx, -cy);
+
+        const center = { cx, cy };
+        drawPattern(center, 350, corners, lineWidth, count, angle, fraction, colors, context);
+        context.restore();
     };
+
+    rotationInput.addEventListener('input', ({ target }) => {
+        rotationValue.textContent = target.value;
+        rotation = target.value * Math.PI / 180;
+        redraw();
+    });
 
     cornersInput.addEventListener('input', ({ target }) => {
         cornersValue.textContent = target.value;
@@ -129,6 +145,43 @@ window.onload = function() {
     copyButton.addEventListener('click', () => {
         canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]));
     });
+
+    const addColor = color => {
+        const colorInputContainer = document.createElement('div');
+
+        const colorInput = document.createElement('input');
+        colorInput.setAttribute('type', 'color');
+        colorInput.setAttribute('value', color);
+        colorInput.addEventListener('input', ({ target }) => {
+            const index = Array.prototype.indexOf.call(colorsList.children, colorInputContainer);
+            colors[index] = parseInt(target.value.substr(1), 16);
+            redraw();
+        });
+
+        const deleteColor = document.createElement('img');
+        deleteColor.setAttribute('src', deleteIcon);
+        deleteColor.addEventListener('click', ({ target }) => {
+            const index = Array.prototype.indexOf.call(colorsList.children, colorInputContainer);
+            console.log(index)
+            colorsList.removeChild(colorInputContainer);
+            colors.splice(index, 1);
+            redraw();
+        });
+
+        colorInputContainer.appendChild(colorInput);
+        colorInputContainer.appendChild(deleteColor);
+
+        colorsList.appendChild(colorInputContainer);
+        colors.push(parseInt(color.substr(1), 16));
+        redraw();
+    }
+
+    addColorButton.addEventListener('click', () => {
+        addColor('#ffffff');
+    });
+
+    addColor('#0066ff');
+    addColor('#00ffff');
 
     redraw();
 };
