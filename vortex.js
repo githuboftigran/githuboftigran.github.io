@@ -76,6 +76,8 @@ window.onload = function() {
     const countInput = document.getElementById('countInput');
     const countValue = document.getElementById('countValue');
 
+    const copyButton = document.getElementById('copyButton');
+
     const context = canvas.getContext('2d');
     const { width, height } = canvas;
 
@@ -122,6 +124,10 @@ window.onload = function() {
         countValue.textContent = target.value;
         count = target.value;
         redraw();
+    });
+
+    copyButton.addEventListener('click', () => {
+        canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]));
     });
 
     redraw();

@@ -1,0 +1,60 @@
+.button {
+    align-self: flex-start;
+    border: 4px solid #00abff;
+    font-size: 20px;
+    border-radius: 4px;
+    padding: 10px 24px;
+    background-color: transparent;
+    color: white;
+}
+
+.controlsContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 30px;
+}
+
+.controlRowContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.valueContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.sliderContainer {
+    display: flex;
+    flex: 6;
+    flex-direction: column;
+}
+
+.valueContainer span {
+    color: #fff;
+}
+
+.valueContainer :first-child {
+    margin-bottom: 10px;
+}
+
+.minMaxContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.minMaxContainer span {
+    color: #fff;
+}
+
+.minMaxContainer :first-child {
+    margin-left: 4px;
+}
+
+.minMaxContainer :last-child {
+    margin-right: 4px;
+}

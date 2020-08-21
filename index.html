@@ -4,76 +4,83 @@
     <meta charset="UTF-8">
     <title>JS</title>
     <script type="text/javascript" src="./vortex.js"></script>
+    <link href="./styles.css" rel="stylesheet">
 </head>
 <body style="background-color: #444; padding: 30px;">
     <div style="display: flex;">
         <canvas id="mainDrawingCanvas" width="800" height="800"></canvas>
-        <div style="display: flex; flex-direction: column; flex: 1; margin-left: 30px;">
-            <div style="display: flex; align-items: center; margin-bottom: 40px">
-                <div style="display: flex; flex-direction: column; flex: 1;">
-                    <span style="color: #fff;  margin-bottom: 10px;">Corners</span>
-                    <span style="color: #fff" id="cornersValue">6</span>
+        <div class="controlsContainer">
+            <div class="controlRowContainer">
+                <div class="valueContainer">
+                    <span>Corners</span>
+                    <span id="cornersValue">6</span>
                 </div>
-                <div style="display: flex; flex: 6; flex-direction: column">
-                    <div style="display: flex; justify-content: space-between">
-                        <span style="color: #fff; margin-right: 8px;">3</span>
-                        <span style="color: #fff; margin-right: 8px;">17</span>
+                <div class="sliderContainer">
+                    <div class="minMaxContainer">
+                        <span>3</span>
+                        <span>17</span>
                     </div>
-                    <input type="range" min="3" max="17" value="6" id="cornersInput">
+                    <input type="range" min="3" max="17" value="6" id="cornersInput"/>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; margin-bottom: 40px">
-                <div style="display: flex; flex-direction: column; flex: 1">
-                    <span style="color: #fff;  margin-bottom: 10px;">Line width</span>
-                    <span style="color: #fff" id="lineWidthValue">4</span>
+            <div class="controlRowContainer">
+                <div class="valueContainer">
+                    <span >Line width</span>
+                    <span id="lineWidthValue">4</span>
                 </div>
-                <div style="display: flex; flex: 6; flex-direction: column">
-                    <div style="display: flex; justify-content: space-between">
-                        <span style="color: #fff; margin-right: 8px;">1</span>
-                        <span style="color: #fff; margin-right: 8px;">20</span>
+                <div class="sliderContainer">
+                    <div class="minMaxContainer">
+                        <span>1</span>
+                        <span>20</span>
                     </div>
-                    <input type="range" min="1" max="20" value="4" id="lineWidthInput">
+                    <input type="range" min="1" max="20" value="4" id="lineWidthInput"/>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; margin-bottom: 40px">
-                <div style="display: flex; flex-direction: column; flex: 1">
-                    <span style="color: #fff;  margin-bottom: 10px;">Angle</span>
-                    <span style="color: #fff" id="angleValue">0.8</span>
+            <div class="controlRowContainer">
+                <div class="valueContainer">
+                    <span >Angle</span>
+                    <span id="angleValue">0.8</span>
                 </div>
-                <div style="display: flex; flex: 6; flex-direction: column">
-                    <div style="display: flex; justify-content: space-between">
-                        <span style="color: #fff; margin-right: 8px;">1</span>
-                        <span style="color: #fff; margin-right: 8px;">360</span>
+                <div class="sliderContainer">
+                    <div class="minMaxContainer">
+                        <span>1</span>
+                        <span>360</span>
                     </div>
-                    <input type="range" min="0.1" max="30" value="0.8" step="0.1" id="angleInput">
+                    <input type="range" min="0.1" max="30" value="0.8" step="0.1" id="angleInput"/>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; margin-bottom: 40px">
-                <div style="display: flex; flex-direction: column; flex: 1">
-                    <span style="color: #fff;  margin-bottom: 10px;">Fraction</span>
-                    <span style="color: #fff" id="fractionValue">0.9955</span>
+            <div class="controlRowContainer">
+                <div class="valueContainer">
+                    <span >Fraction</span>
+                    <span id="fractionValue">0.9955</span>
                 </div>
-                <div style="display: flex; flex: 6; flex-direction: column">
-                    <div style="display: flex; justify-content: space-between">
-                        <span style="color: #fff; margin-right: 8px;">0.90</span>
-                        <span style="color: #fff; margin-right: 8px;">0.999</span>
+                <div class="sliderContainer">
+                    <div class="minMaxContainer">
+                        <span>0.90</span>
+                        <span>0.999</span>
                     </div>
-                    <input type="range" min="0.90" max="0.999" value="0.9955" step="0.0005" id="fractionInput">
+                    <input type="range" min="0.90" max="0.999" value="0.9955" step="0.0005" id="fractionInput"/>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; margin-bottom: 40px">
-                <div style="display: flex; flex-direction: column; flex: 1">
-                    <span style="color: #fff;  margin-bottom: 10px;">Count</span>
-                    <span style="color: #fff" id="countValue">100</span>
+            <div class="controlRowContainer">
+                <div class="valueContainer">
+                    <span>Count</span>
+                    <span id="countValue">100</span>
                 </div>
-                <div style="display: flex; flex: 6; flex-direction: column">
-                    <div style="display: flex; justify-content: space-between">
-                        <span style="color: #fff; margin-right: 8px;">1</span>
-                        <span style="color: #fff; margin-right: 8px;">1000</span>
+                <div class="sliderContainer">
+                    <div class="minMaxContainer">
+                        <span>1</span>
+                        <span>1000</span>
                     </div>
-                    <input type="range" min="1" max="1000" value="100" id="countInput">
+                    <input type="range" min="1" max="1000" value="100" id="countInput"/>
                 </div>
             </div>
+            <input
+                type="button"
+                id="copyButton"
+                value="Copy"
+                class="button"
+            />
         </div>
     </div>
 </body>
