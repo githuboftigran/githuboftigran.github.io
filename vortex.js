@@ -35,14 +35,14 @@ const drawPolygon = (size, center, corners, color, context) => {
     context.stroke();
 };
 
-const drawPattern = (center, size, corners, lineWidth, count, angle, fraction, colors, context) => {
+const drawPattern = (center, size, corners, lineWidth, quantity, angle, fraction, colors, context) => {
     context.save();
     context.lineWidth = lineWidth;
     const {cx, cy} = center;
-    for(let i = 0; i < count; i += 1) {
-        const alpha = Math.floor(255 - 255 * i / count);
+    for(let i = 0; i < quantity; i += 1) {
+        const alpha = Math.floor(255 - 255 * i / quantity);
 
-        const color = interpolateColor(colors, i / count);
+        const color = interpolateColor(colors, i / quantity);
         const colorStr = color.toString(16);
         let colorWithAlpha = `${colorStr}${alpha < 16 ? '0' : ''}${alpha.toString(16)}`;
         if (colorWithAlpha.length < 8) {
@@ -70,8 +70,8 @@ window.onload = function() {
     const angleValue = document.getElementById('angleValue');
     const fractionInput = document.getElementById('fractionInput');
     const fractionValue = document.getElementById('fractionValue');
-    const countInput = document.getElementById('countInput');
-    const countValue = document.getElementById('countValue');
+    const quantityInput = document.getElementById('quantityInput');
+    const quantityValue = document.getElementById('quantityValue');
 
     const colorsList = document.getElementById('colorsList');
 
@@ -86,7 +86,7 @@ window.onload = function() {
     let lineWidth = lineWidthInput.value;
     let angle = angleInput.value;
     let fraction = fractionInput.value;
-    let count = countInput.value;
+    let quantity = quantityInput.value;
     const colors = [];
 
     const redraw = () => {
@@ -102,7 +102,7 @@ window.onload = function() {
         context.translate(-cx, -cy);
 
         const center = { cx, cy };
-        drawPattern(center, 350, corners, lineWidth, count, angle, fraction, colors, context);
+        drawPattern(center, 350, corners, lineWidth, quantity, angle, fraction, colors, context);
         context.restore();
     };
 
@@ -136,9 +136,9 @@ window.onload = function() {
         redraw();
     });
 
-    countInput.addEventListener('input', ({ target }) => {
-        countValue.textContent = target.value;
-        count = target.value;
+    quantityInput.addEventListener('input', ({ target }) => {
+        quantityValue.textContent = target.value;
+        quantity = target.value;
         redraw();
     });
 
