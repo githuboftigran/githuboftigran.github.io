@@ -144,46 +144,7 @@ window.onload = function() {
 
     copyButton.addEventListener('click', () => {
         canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]));
-        console.log('============== CPU =============');
-        const allColors = [];
-        for (let i = 0; i < 9; i+= 1) {
-            const color = interpolateColor([0x9000ff, 0x0000ff, 0x00ffff], i / 8 );
-            const r = (color >> 16) & 0xff;
-            const g = (color >> 8) & 0xff;
-            const b = color & 0xff;
-            allColors[11-i] = `${r}\t${g}\t${b}`;
-        }
-
-        for (let i = 0; i < 8; i+= 1) {
-            const color = interpolateColor([0x9000ff, 0x0000ff, 0x00ffff], i / 7 );
-            const r = (color >> 16) & 0xff;
-            const g = (color >> 8) & 0xff;
-            const b = color & 0xff;
-            allColors[(11 + i) % 15] = `${r}\t${g}\t${b}`;
-        }
-        allColors.forEach((color, index) => console.log(`${index}\t${color}`));
-
-        allColors.length = 0;
-        console.log('============== Case =============');
-        for (let i = 0; i < 6; i+= 1) {
-            const color = interpolateColor([0x6000ff, 0x0000ff, 0x00ffff], i / 5 );
-            const r = (color >> 16) & 0xff;
-            const g = (color >> 8) & 0xff;
-            const b = color & 0xff;
-            const pos = (i + 8) % 12;
-            allColors[pos] = `${r}\t${g}\t${b}`;
-            allColors[(15 - pos) % 12] = `${r}\t${g}\t${b}`;
-        }
-        allColors.forEach((color, index) => console.log(`${index}\t${color}`));
-
-        console.log('============== RAM =============');
-        for (let i = 0; i < 10; i+= 1) {
-            const color = interpolateColor([0x6000ff, 0x0000ff, 0x00ffff], i / 9 );
-            const r = (color >> 16) & 0xff;
-            const g = (color >> 8) & 0xff;
-            const b = color & 0xff;
-            console.log(`${i}\t${r}\t${g}\t${b}`);
-        }
+        printColors(ColorSchemes.fire);
     });
 
     const addColor = color => {
@@ -225,3 +186,57 @@ window.onload = function() {
 
     redraw();
 };
+
+const ColorSchemes = {
+    cyan: {
+        cpu: [0x9000ff, 0x0000ff, 0x00ffff],
+        ram: [0x6000ff, 0x0000ff, 0x00ffff],
+    },
+    fire: {
+        cpu: [0xffff33, 0xffff00, 0xff8800, 0xff0000, 0xff0000],
+        ram: [0xffff33, 0xffff00, 0xff8800, 0xff0000, 0xff0000],
+    },
+};
+
+function printColors({ cpu, ram }) {
+    console.log('============== CPU =============');
+    const allColors = [];
+    for (let i = 0; i < 9; i+= 1) {
+        const color = interpolateColor(cpu, i / 8 );
+        const r = (color >> 16) & 0xff;
+        const g = (color >> 8) & 0xff;
+        const b = color & 0xff;
+        allColors[11-i] = `${r}\t${g}\t${b}`;
+    }
+
+    for (let i = 0; i < 8; i+= 1) {
+        const color = interpolateColor(cpu, i / 7 );
+        const r = (color >> 16) & 0xff;
+        const g = (color >> 8) & 0xff;
+        const b = color & 0xff;
+        allColors[(11 + i) % 15] = `${r}\t${g}\t${b}`;
+    }
+    allColors.forEach((color, index) => console.log(`${index}\t${color}`));
+
+    allColors.length = 0;
+    console.log('============== Case =============');
+    for (let i = 0; i < 6; i+= 1) {
+        const color = interpolateColor(ram, i / 5 );
+        const r = (color >> 16) & 0xff;
+        const g = (color >> 8) & 0xff;
+        const b = color & 0xff;
+        const pos = (i + 8) % 12;
+        allColors[pos] = `${r}\t${g}\t${b}`;
+        allColors[(15 - pos) % 12] = `${r}\t${g}\t${b}`;
+    }
+    allColors.forEach((color, index) => console.log(`${index}\t${color}`));
+
+    console.log('============== RAM =============');
+    for (let i = 0; i < 10; i+= 1) {
+        const color = interpolateColor(ram, i / 9 );
+        const r = (color >> 16) & 0xff;
+        const g = (color >> 8) & 0xff;
+        const b = color & 0xff;
+        console.log(`${i}\t${r}\t${g}\t${b}`);
+    }
+}
